@@ -75,7 +75,7 @@ static int lws_event_callback(struct lws* conn, enum lws_callback_reasons reason
         {
             cout << "received LWS_CALLBACK_CLIENT_RECEIVE" << endl;
 
-            lwsl_debug((char *)(getJson(data).c_str()));
+            //lwsl_debug((char *)(getJson(data).c_str()));
             cout << getJson(data) << endl;
 
             break;
@@ -97,10 +97,10 @@ static int lws_event_callback(struct lws* conn, enum lws_callback_reasons reason
             string json = "{\"op\": \"subscribe\", \"args\": [\"orderBookL2_25:XBTUSD\"]}";//createJsonString();
             int length = json.length();
             cout << json << endl;
-            lwsl_debug((char*)json.c_str());
+            //((char*)json.c_str());
 
             strncpy((char*)message + LWS_PRE, json.c_str(), length);
-            lwsl_debug(reinterpret_cast<char *>(message + LWS_PRE));
+            //lwsl_debug(reinterpret_cast<char *>(message + LWS_PRE));
             lws_write(conn, &message[LWS_PRE], length, LWS_WRITE_TEXT);
 
             break;
