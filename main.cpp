@@ -2,14 +2,10 @@
 #include <cstdlib>
 #include <string>
 
-#include <rapidjson/document.h>
-#include <rapidjson/writer.h>
 #include <signal.h>
-#include <rapidjson/stringbuffer.h>
 
 #include <libwebsockets.h>
 
-using namespace rapidjson;
 using namespace std;
 
 static int destroy_flag = 0;
@@ -23,34 +19,6 @@ struct session_data
 static void sigint_handler(int sig)
 {
     destroy_flag = 1;
-}
-
-string getJson(void* data)
-{
-    Document json;
-    json.Parse(reinterpret_cast<const char*>(data));
-
-    StringBuffer buffer;
-    Writer<StringBuffer> writer(buffer);
-    json.Accept(writer);
-
-    return buffer.GetString();
-}
-
-string createJsonString()
-{
-    StringBuffer buffer;
-    Writer<StringBuffer> writer(buffer);
-    writer.StartObject();
-
-    writer.Key("op");
-    writer.String("subscribe");
-
-    writer.Key("args");
-    writer.String("orderBookL2_25::XBTUSD");
-
-    writer.EndObject();
-    return buffer.GetString();
 }
 
 // pick the callback function to process data received from server
@@ -76,7 +44,8 @@ static int lws_event_callback(struct lws* conn, enum lws_callback_reasons reason
             cout << "received LWS_CALLBACK_CLIENT_RECEIVE" << endl;
 
             //lwsl_debug((char *)(getJson(data).c_str()));
-            cout << getJson(data) << endl;
+            auto msg = reinterpret_cast<const char*>(data);
+            cout << msg << endl;
 
             break;
         }
