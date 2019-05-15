@@ -140,7 +140,7 @@ int main(void)
     cout << "initiating BitMEX websocket" << endl;
 
     cout << "setting log level" << endl;
-    int logs = LLL_ERR  | LLL_WARN;
+    int logs = LLL_ERR | LLL_DEBUG | LLL_WARN;
     lws_set_log_level(logs, NULL);
     cout << "log level set" << endl;
 
