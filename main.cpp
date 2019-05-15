@@ -1,9 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
-
 #include <signal.h>
-
 #include <libwebsockets.h>
 
 using namespace std;
