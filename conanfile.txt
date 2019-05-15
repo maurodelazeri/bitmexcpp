@@ -1,0 +1,6 @@
+[requires]
+libwebsockets/3.1.0@zinnion/stable
+rapidjson/1.1.0@zinnion/stable
+
+[generators]
+cmake
