@@ -9,11 +9,6 @@ using namespace std;
 static int destroy_flag = 0;
 static int writeable_flag = 0;
 
-struct session_data
-{
-    int fd;
-};
-
 static void sigint_handler(int sig)
 {
     destroy_flag = 1;
@@ -61,7 +56,7 @@ static int lws_event_callback(struct lws* conn, enum lws_callback_reasons reason
             unsigned char message[512];
             memset(&message[LWS_PRE], 0, 512 - LWS_PRE);
 
-            string json = "{\"op\": \"subscribe\", \"args\": [\"orderBookL2_25:XBTUSD\"]}";//createJsonString();
+            string json = "{ \"type\": \"subscribe\", \"product_ids\": [ \"ETH-USD\", \"ETH-EUR\" ], \"channels\": [ \"level2\", \"heartbeat\", { \"name\": \"ticker\", \"product_ids\": [ \"ETH-BTC\", \"ETH-USD\" ] } ] }";//createJsonString();
             int length = json.length();
             cout << json << endl;
             //((char*)json.c_str());
@@ -139,8 +134,8 @@ int main(void)
     cout << "creating lws connection" << endl;
     struct lws_client_connect_info connect_info = {0};
 
-    string host = "www.bitmex.com";
-    string path = "/realtime";
+    string host = "ws-feed.pro.coinbase.com";
+    string path = "/";
     int port = 443;
 
     connect_info.context        = context;
